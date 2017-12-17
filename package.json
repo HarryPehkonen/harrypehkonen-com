@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-route": "^3.2.0",
+    "koa-static": "^4.0.2",
+    "mime": "^2.0.3"
+  },
+  "scripts": {
+    "serve": "node index.js"
+  }
+}
