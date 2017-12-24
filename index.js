@@ -6,8 +6,13 @@ const Koa = require("koa");
 const route = require("koa-route");
 const koaStatic = require("koa-static");
 const app = new Koa();
+const api = require("./api");
 
-app.use(route.get("/api/:whatever", everything));
+app.use(verbose);
+
+app.use(route.get("/api/", (ctx) => {
+  ctx.body = {message: api.sayHi()};
+}));
 
 const staticOpts = {
   hidden: true,
@@ -15,9 +20,9 @@ const staticOpts = {
 app.use(koaStatic(__dirname + "/static", staticOpts));
 app.use(badurl);
 
-async function everything(ctx, next) {
-  console.log("everything");
-  ctx.body = "Hello World!";
+async function verbose(ctx, next) {
+  console.log("request:  " + JSON.stringify(ctx.request));
+  return next();
 }
 
 async function badurl(ctx, next) {
