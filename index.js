@@ -1,3 +1,15 @@
+const cluster = require("cluster");
+cluster.on("exit", function(worker, code, signal) {
+    const exitCode = worker.process.exitCode;
+    console.log('Worker ' + worker.process.pid + ' died (' + exitCode + ').  Restarting...');
+    cluster.fork();
+});
+if (cluster.isMaster) {
+  console.log('Master pid:  ' + process.pid);
+  cluster.fork();
+  return;
+}
+
 const http = require("http");
 const http2 = require("http2");
 const fs = require("fs");
