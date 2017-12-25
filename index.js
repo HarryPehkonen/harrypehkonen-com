@@ -11,7 +11,7 @@ if (cluster.isMaster) {
 }
 
 const http = require("http");
-const http2 = require("http2");
+const https = require("https");
 const fs = require("fs");
 
 const Koa = require("koa");
@@ -26,15 +26,42 @@ app.use(route.get("/api/", (ctx) => {
   ctx.body = {message: api.sayHi()};
 }));
 
+app.use(route.get("/api/dump/", (ctx) => {
+  ctx.body = ctx;
+}));
+
+app.use(route.get("/api/secure/", (ctx) => {
+  ctx.body = {
+    secure: ctx.secure,
+  };
+}));
+
+// non-api routes get redirected to tls
+app.use(forceSecure);
 const staticOpts = {
   hidden: true,
 };
+
 app.use(koaStatic(__dirname + "/static", staticOpts));
 app.use(badurl);
 
+
+// route handlers
 async function verbose(ctx, next) {
   console.log("request:  " + JSON.stringify(ctx.request));
   return next();
+}
+
+async function forceSecure(ctx, next) {
+  if (ctx.secure)
+    return next();
+  else {
+    const host = ctx.request.header.host;
+    const path = ctx.request.url;
+    const url = "https://" + host + path;
+    console.log("redirecting to tls:  " + url);
+    ctx.response.redirect(url);
+  }
 }
 
 async function badurl(ctx, next) {
@@ -54,7 +81,7 @@ http
   .listen(80)
 ;
 
-http2
-  .createSecureServer(httpsOptions, app.callback())
+https
+  .createServer(httpsOptions, app.callback())
   .listen(443)
 ;
