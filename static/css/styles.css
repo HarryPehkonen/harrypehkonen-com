@@ -4,8 +4,9 @@
     }
 
     header {
-        width: 80vw;
-        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     header h1 {
@@ -21,7 +22,8 @@
     }
 
     section {
-        padding: 150px 5%;
+        width: 7.5in;
+        page-break-inside: avoid;
     }
 
     section h1 {
@@ -30,6 +32,58 @@
 
     section h2 {
         font-size: 18px;
+    }
+
+    footer {
+        width: 7.5in;
+    }
+
+    footer ul,
+    footer p {
+        text-align: center;
+    }
+
+    /* displaying LIs inline removes the dot */
+    footer ul li {
+        display: inline;
+    }
+    footer ul li + li:before {
+        content: "● "; /* U+25CF */
+    }
+}
+
+@media screen {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    section + section {
+        padding-top: 150px;
+    }
+
+    footer {
+        margin-top: 1in;
+    }
+}
+
+@media print {
+    body {
+        font-size: 12px;
+        height: 100%;
+    }
+    section {
+        padding: 10px 5%;
+    }
+    section.familiarities ul {
+        column-count: 2;
+    }
+
+    /* footer at bottom of each printed page */
+    footer {
+        position: fixed;
+        bottom: 0;
     }
 }
 
@@ -43,6 +97,10 @@
 @media
     screen
     and (max-width: 800px) {
+        section {
+            width: auto;
+        }
+
         section.familiarities ul {
             column-count: 3;
         }
@@ -54,7 +112,23 @@
 
 @media
     screen
+    and (max-width: 680px) {
+        footer ul li {
+            display: block;
+            list-style-type: none;
+        }
+        footer ul li + li:before {
+            content: none;
+        }
+}
+
+@media
+    screen
     and (max-width: 600px) {
+        section {
+            width: auto;
+        }
+
         section.familiarities ul {
             column-count: 2;
         }
@@ -67,6 +141,10 @@
 @media
     screen
     and (max-width: 450px) {
+        section {
+            width: auto;
+        }
+
         section.familiarities ul {
             column-count: 1;
         }
@@ -79,6 +157,10 @@
 @media
     screen
     and (max-width: 400px) {
+        section {
+            width: auto;
+        }
+
         header h1 {
             font-size: 40px;
         }
