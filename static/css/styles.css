@@ -35,7 +35,7 @@
     }
 
     footer {
-        width: 7.5in;
+        width: 100%;
     }
 
     footer ul,
@@ -98,7 +98,7 @@
     screen
     and (max-width: 800px) {
         section {
-            width: auto;
+            width: 80%;
         }
 
         section.familiarities ul {
@@ -126,7 +126,7 @@
     screen
     and (max-width: 600px) {
         section {
-            width: auto;
+            width: 90%;
         }
 
         section.familiarities ul {
@@ -142,7 +142,7 @@
     screen
     and (max-width: 450px) {
         section {
-            width: auto;
+            width: 95%;
         }
 
         section.familiarities ul {
@@ -158,7 +158,7 @@
     screen
     and (max-width: 400px) {
         section {
-            width: auto;
+            width: 100%;
         }
 
         header h1 {
