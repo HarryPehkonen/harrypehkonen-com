@@ -70,7 +70,10 @@ async function badurl(ctx, next) {
   ctx.throw(404, "Not found", "Not Found");
 }
 
-const certpath = "/etc/letsencrypt/live/www.harrypehkonen.com";
+const letsEncryptPath = "/etc/letsencrypt/live/www.harrypehkonen.com";
+const certpath = fs.existsSync(letsEncryptPath)
+  ? letsEncryptPath
+  : process.cwd();
 const httpsOptions = {
   key: fs.readFileSync(certpath + "/privkey.pem"),
   cert: fs.readFileSync(certpath + "/cert.pem"),
